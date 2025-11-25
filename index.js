@@ -26,21 +26,21 @@ function playSound(key) {
 
 // Add button animation when pressed on
 function buttonAnimation(key) {
-    const activeButton = document.querySelector("." + key);
+    const activeButton = $("." + key);
 
-    if (!activeButton) {
-        return;
-    }
+    if (!activeButton.length) return;
 
-    activeButton.classList.add("pressed");
-    setTimeout(() => activeButton.classList.remove("pressed"), 100);
+    activeButton.addClass("pressed");
+    setTimeout(() => activeButton.removeClass("pressed"), 100);
 }
 
 // Detect button press
-document.querySelectorAll(".drum").forEach(drum => {
-    const key = drum.innerText.toLowerCase();
+$(".drum").each(function() {
+    const drum = $(this);
 
-    drum.addEventListener("click", () => {
+    const key = drum.text().toLowerCase();
+
+    drum.on("click", () => {
         if (soundMap[key]) {
             playSound(key);
             buttonAnimation(key);
@@ -49,7 +49,7 @@ document.querySelectorAll(".drum").forEach(drum => {
 });
 
 // Detect keyboard press
-document.addEventListener("keydown", (keyboard) => {
+$(document).on("keydown", (keyboard) => {
     const key = keyboard.key.toLowerCase();
 
     if (soundMap[key]) {
